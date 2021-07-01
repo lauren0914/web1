@@ -21,4 +21,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('accountapp.urls'))
+    # admin/으로 시작하는 모든 URL을 장고가 view와 대조해 찾아낸다는 뜻
 ]
