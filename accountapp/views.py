@@ -14,11 +14,14 @@ def hello_world(request):
         new_data.text = temp
         new_data.save()
 
+        # HelloWorld.objects : HelloWorld 의 모든 객체를 가져온다
+        data_list = HelloWorld.objects.all()
         return render(request, 'accountapp/hello_world.html',
-                      context={'new_data': new_data})
+                      context={'data_list': data_list})
     else:
+        data_list = HelloWorld.objects.all()
         return render(request, 'accountapp/hello_world.html',
-                      context={'text': 'GET METHOD!'})
+                      context={'data_list': data_list})
 
 # request : 요청 관련 정보가 들어오는 곳. 지금은 안 씀
 # template name
