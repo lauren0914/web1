@@ -1,8 +1,11 @@
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User # 여기도 확인하기
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
 
 from accountapp.models import HelloWorld
 
@@ -13,8 +16,11 @@ def hello_world(request):
         temp = request.POST.get('input')
 
         new_data = HelloWorld()
-        new_data.text = temp
-        new_data.save()
+        new_data.text = temp # 이렇게 중단점을 만들어 줄 수 있음. 일반적인 runserver 에서는 안 먹히고. 오른쪽 상단에 debug라는 버튼을 누르면 중단점에서 멈추게 할 수 있음
+        # 디버그 창 열어서 어떤 상태인지 알 수 있음. 어디서 에러났는지 확인할 수 있음. f8을 누르면 한줄한줄 넘어가는 걸 볼 수 있음.
+        new_data.save() # save 함수 내부에서 어떤 일이 벌어나는지 알고 싶다. f7을 누르게 되면 save 함수로 들어갈 수 있음.
+        # 들어가서 f8 누르면 내가 보고 있는 라인 기준으로 한줄한줄 실행시키는 것
+        # f9를 누르게 되면, 다음 중단점까지 건너뛴다.
         
         # post 요청을 get 요청으로 redirect(재연결하는) 해준다. 새로고침할 때 마지막 요청을 반복하는 문제를 해결하기 위해서
         # 어디로 보낼 건지 알려줄 건데. / 기반의 주소로 안 쓸 거야. account 앱 안에 있는 hello_world(url name) 라우트로 보내라.
@@ -28,3 +34,15 @@ def hello_world(request):
 
 # request : 요청 관련 정보가 들어오는 곳. 지금은 안 씀
 # template name
+
+# class based view!! crud
+# 계정(얘는 필수적이라 장고에서 기본적으로 제공해주는 디폴트 모델이 있음) 나중엔 우리가 만들겠지만.
+class AccountCreateView(CreateView): # 상속
+    # 무엇을 만들 것인지?
+    model = User
+    # user data를 넣을 입력 form
+    form_class = UserCreationForm # 얘도 장고에서 제공해주는 거 있음
+    # create 가 정상적으로 이뤄진 후에 넘어갈 url
+    success_url = reverse_lazy('accountapp:hello_world') 
+    # reverse_lazy : 위에서는 reverse 썼는데 여기서는 lazy 왜 붙여요? 함수에서 reverse 불러올 때는 바로 호출, class에서는 나중에 불러오기 때문에? lazy를 쓴다. 걍 외워
+    template_name = 'accountapp/create.html' # 노란색으로 지금 html 파일이 없다고 뜸. 노란색은 파일이 없다는 걸 알려주는 거구나 ㅇㅅㅇ
