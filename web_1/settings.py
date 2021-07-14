@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 # resolve 까지 settings.py 파일의 경로를 나타냄. 거기에 부모의 경로를 넣고 있음. 부모경로가 web_1 근데 부모가 또 있음. 프로젝트 폴더
 # 즉, 최상위 프로젝트폴더의 .env를 읽어서
@@ -121,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'UTC'
 
@@ -145,3 +147,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGIN_REDIRECT_URL = reverse_lazy('accountapp:hello_world')
+LOGOUT_REDIRECT_URL = reverse_lazy('accountapp:login')
