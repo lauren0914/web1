@@ -7,6 +7,7 @@
         <span>nav1</span>
         <span>nav1</span>
 {#        user 는 장고 어디서는 불러올 수 있는 객체임. 기본적으로 저 메소드가 달려있는데. 저걸 기반으로 해서 이 user가 로그인 했는지 안 했는지를 판단할 수 있음 #}
+{#    만약에 user가 로그인을 안 한 상태면 login, create 로 연결되는 a 태그를 보여줘라#}
         {% if not user.is_authenticated %}
         <span>
             <a href="{% url 'accountapp:login' %}">
@@ -18,7 +19,7 @@
                 SignUp
             </a>
         </span>
-{#            로그인이 된 상태이면 로그아웃 페이지 보여주기#}
+{#            만약에 로그인이 된 상태이면 로그인, create 필요없으니까, 로그아웃 페이지로 연결되는 a 태그를 보여줘라#}
         {% else %}
         <span>
             <a href="{% url 'accountapp:logout' %}">

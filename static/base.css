@@ -4,14 +4,21 @@
 }
 
 .pragmatic_header_button{
-    margin-bottom: 2rem;"
+    margin-bottom: 2rem;
 }
 
 .pragmatic_footer_logo {
     margin: 1.5rem 0;
-    font-family: 'Fira Sans', sans-serif;"
+    font-family: 'Fira Sans', sans-serif;
 }
 
 .pragmatic_footer_button {
      margin-top: 2rem;
+}
+/*max-width*/
+/*페이지가 바로바로 안 바뀔수도 있어. 왜냐면, 페이지가 base를 정적파일로 분류를 해서 캐쉬로 저장해놔. 매번 요청하지 않기 위해서. disable cache 를 체크해둬야됨*/
+.mw-500{
+    max-width: 500px;
+    /*이렇게 두개 넣어주면 위아래, 양옆을 말하는 거*/
+    padding: 1rem 1.5rem;
 }
