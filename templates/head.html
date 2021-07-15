@@ -12,4 +12,32 @@
 
     {# DEFAULT CSS LINK #}
     <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+
+    <style>
+        @font-face {
+            font-family: 'NanumSquareR';
+            src: local('NanumSquareR'),
+            url("{% static 'fonts/NanumSquareR.otf' %}") format("opentype");
+        }
+        @font-face {
+            {#이름 정하기#}
+            {#실제 폰트 넣기. local : 요청한 사용자의 컴퓨터에 나눔스퀘어 있으면 써라는 의미.#}
+            {#먄약에 없을 때에는 우리 사이트에 요청해서 이 폰트파일을 가져와서 그걸 적용해라#}
+            font-family: 'NanumSquareEB';
+            src: local('NanumSquareEB'),
+            url("{% static 'fonts/NanumSquareEB.otf' %}") format("opentype");
+        }
+        @font-face {
+            font-family: 'NanumSquareB';
+            src: local('NanumSquareB'),
+            url("{% static 'fonts/NanumSquareB.otf' %}") format("opentype");
+        }
+        @font-face {
+            font-family: 'NanumSquareL';
+            src: local('NanumSquareL'),
+            url("{% static 'fonts/NanumSquareL.otf' %}") format("opentype");
+        }
+    </style>
+
+
 </head>
