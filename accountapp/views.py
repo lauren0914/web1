@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
+from django.views.generic import CreateView, DetailView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
 
 from accountapp.models import HelloWorld
 
@@ -48,3 +48,12 @@ class AccountCreateView(CreateView): # 상속
     success_url = reverse_lazy('accountapp:hello_world') 
     # reverse_lazy : 위에서는 reverse 썼는데 여기서는 lazy 왜 붙여요? 함수에서 reverse 불러올 때는 바로 호출, class에서는 나중에 불러오기 때문에? lazy를 쓴다. 걍 외워
     template_name = 'accountapp/create.html' # 노란색으로 지금 html 파일이 없다고 뜸. 노란색은 파일이 없다는 걸 알려주는 거구나 ㅇㅅㅇ
+
+class AccountDetailView(DetailView):
+    # 어떤 모델의 상세정보를 볼 건지. 모델 지정해주기. 위에서 사용한 모델
+    model = User
+    # 특정 account 객체의 이름을 뭐라고 정할 것이냐. 이름 지어주기? 나중에 템플릿에서 사용하기 위해서
+    context_object_name = 'target_user'
+    # html 뭐 쓸 건지
+    template_name = 'accountapp/detail.html'
+    # 라우팅 : 어떤 url로 들어가야 이 로직이 작동될 건지.

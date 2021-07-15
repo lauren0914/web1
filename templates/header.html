@@ -25,6 +25,12 @@
             <a href="{% url 'accountapp:logout' %}">
                 Logout
             </a>
+        <span>
+{#            user.is_authenticated %} 이거의 user임. user의 pk값을 함꼐 보내줘야 구동이 됨#}
+            <a href="{% url 'accountapp:detail' pk=user.pk %}">
+                MyPage
+            </a>
+        </span>
         </span>
         {% endif %}
     </div>
