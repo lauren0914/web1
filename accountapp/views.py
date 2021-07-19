@@ -8,6 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, \
     DeleteView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
 
+from accountapp.forms import AccountCreationForm
 from accountapp.models import HelloWorld
 
 
@@ -67,7 +68,8 @@ class AccountUpdateView(UpdateView):
     # 어떤 것을 수정할 것인지 모델 적기
     model = User
     # 수정할 수 있는 입력 form이 있어야됨(장고애서 기본으로 제공해주는)
-    form_class = UserCreationForm
+    # UserCreationForm 안에 있는 password1, 2가 아이디, 비밀번호 바꾸는 거. 그래서 상속 받아서 커스텀을 하자
+    form_class = AccountCreationForm
     context_object_name = 'target_user'
     success_url = reverse_lazy('accountapp:hello_world') # detail 로 넘어가려면 pk값 필요한데. reverse_lazy로 넘길 수 있는 방법 없음. 일단 hello월드로 넘겨
     template_name = 'accountapp/update.html'
