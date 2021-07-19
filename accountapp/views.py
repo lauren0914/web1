@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
+from django.views.generic import CreateView, DetailView, UpdateView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
 
 from accountapp.models import HelloWorld
 
@@ -41,12 +41,16 @@ def hello_world(request):
 class AccountCreateView(CreateView): # 상속
     # 무엇을 만들 것인지? user의 정보를 입력받을 모델을 만들고(?)
     # 이 변수명은 고정임. 이 cbv에서 제공하는 그대로
+    # 무슨 모델을 사용할 것이냐? 장고에서 기본으로 제공하는 User 라는 모델을 사용. User에서 ctrl b 를 누르면 AbstractUser 를 상속받고 있고, 
+    # 또 들어가보면, username, email 등 정보들 + 기본적인 검증데이터 등이 이미 설정된 상태로 제공이 된다. 이걸 상속받아서 열 추가할수도 있음
     model = User
     # user data를 넣을 입력 form
     form_class = UserCreationForm # 얘도 장고에서 제공해주는 거 있음
-    # create 가 정상적으로 이뤄진 후에 넘어갈 url
+    # create 가 정상적으로 이뤄진 후에 어느 url로 연결할 것인가?
     success_url = reverse_lazy('accountapp:hello_world') 
-    # reverse_lazy : 위에서는 reverse 썼는데 여기서는 lazy 왜 붙여요? 함수에서 reverse 불러올 때는 바로 호출, class에서는 나중에 불러오기 때문에? lazy를 쓴다. 걍 외워
+    # reverse_lazy : 함수형에서는 reverse 썼는데 여기서는 lazy 왜 붙여요?
+    # 함수에서 reverse 불러올 때는 바로 호출, class에서는 나중에 불러오기 때문에? lazy를 쓴다. 걍 외워
+    # 함수와 클래스가 파이썬에서 불러와지는 방식의 차이
     template_name = 'accountapp/create.html' # 노란색으로 지금 html 파일이 없다고 뜸. 노란색은 파일이 없다는 걸 알려주는 거구나 ㅇㅅㅇ
 
 class AccountDetailView(DetailView):
@@ -57,3 +61,12 @@ class AccountDetailView(DetailView):
     # html 뭐 쓸 건지
     template_name = 'accountapp/detail.html'
     # 라우팅 : 어떤 url로 들어가야 이 로직이 작동될 건지.
+
+class AccountUpdateView(UpdateView):
+    # 어떤 것을 수정할 것인지 모델 적기
+    model = User
+    # 수정할 수 있는 입력 form이 있어야됨(장고애서 기본으로 제공해주는)
+    form_class = UserCreationForm
+    context_object_name = 'target_user'
+    success_url = reverse_lazy('accountapp:hello_world') # detail 로 넘어가려면 pk값 필요한데. reverse_lazy로 넘길 수 있는 방법 없음. 일단 hello월드로 넘겨
+    template_name = 'accountapp/update.html'
