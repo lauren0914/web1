@@ -20,4 +20,5 @@ urlpatterns = [
 #     <int:pk> : pk라는 이름의 숫자를 이 주소창에서 받을 거다
     # 얘도. 어떤 객체를 수정할 것인지 pk를 같이 보내줘야됨
     path('update/<int:pk>', AccountUpdateView.as_view(), name='update'),
+    path('delete/<int:pk>', AccountDetailView.as_view(), name='delete')
 ]

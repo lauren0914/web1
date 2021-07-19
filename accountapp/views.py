@@ -5,7 +5,8 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
+from django.views.generic import CreateView, DetailView, UpdateView, \
+    DeleteView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
 
 from accountapp.models import HelloWorld
 
@@ -70,3 +71,13 @@ class AccountUpdateView(UpdateView):
     context_object_name = 'target_user'
     success_url = reverse_lazy('accountapp:hello_world') # detail 로 넘어가려면 pk값 필요한데. reverse_lazy로 넘길 수 있는 방법 없음. 일단 hello월드로 넘겨
     template_name = 'accountapp/update.html'
+
+# 탈퇴(form 필요없이)
+class AccountDeleteView(DeleteView):
+    model = User
+    # 이 이름을 통해서 객체에 접근하겠다
+    context_object_name = 'target_user'
+    success_url = reverse_lazy('accountapp:hello_world')
+    # delete 안에 있는 로직 알 필요 없음!! 작성할 필요 없음! 안에 들어있으니까.
+    template_name = 'accountapp/delete.html'
+
