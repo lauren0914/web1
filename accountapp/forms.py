@@ -11,5 +11,5 @@ class AccountCreationForm(UserCreationForm):
         # username 필드를 사용하지 않을 거야. 
         
         # 이해할 필요 없음
-        self.fields['uesrname'].disabled = True
+        self.fields['username'].disabled = True
         

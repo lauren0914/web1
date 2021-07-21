@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
 
-from accountapp.views import hello_world, AccountCreateView, AccountDetailView, AccountUpdateView
+from accountapp.views import hello_world, AccountCreateView, AccountDetailView, AccountUpdateView, AccountDeleteView
 
 app_name = 'accountapp' # 라우팅 편리하게 하기 위해서 작성해둔 것
 
@@ -20,5 +20,5 @@ urlpatterns = [
 #     <int:pk> : pk라는 이름의 숫자를 이 주소창에서 받을 거다
     # 얘도. 어떤 객체를 수정할 것인지 pk를 같이 보내줘야됨
     path('update/<int:pk>', AccountUpdateView.as_view(), name='update'),
-    path('delete/<int:pk>', AccountDetailView.as_view(), name='delete')
+    path('delete/<int:pk>', AccountDeleteView.as_view(), name='delete')
 ]

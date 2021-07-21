@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User # 여기도 확인하기
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 
 # Create your views here.
@@ -68,11 +68,23 @@ class AccountUpdateView(UpdateView):
     # 어떤 것을 수정할 것인지 모델 적기
     model = User
     # 수정할 수 있는 입력 form이 있어야됨(장고애서 기본으로 제공해주는)
-    # UserCreationForm 안에 있는 password1, 2가 아이디, 비밀번호 바꾸는 거. 그래서 상속 받아서 커스텀을 하자
+    # UserCreationForm 안에 있는 password1, 2가 아이디, 비밀번호 바꾸는 거?? 그래서 상속 받아서 커스텀을 하자
     form_class = AccountCreationForm
     context_object_name = 'target_user'
     success_url = reverse_lazy('accountapp:hello_world') # detail 로 넘어가려면 pk값 필요한데. reverse_lazy로 넘길 수 있는 방법 없음. 일단 hello월드로 넘겨
     template_name = 'accountapp/update.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated and self.get_object() == request.user:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated and self.get_object() == request.user:
+            return super().post(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
 
 # 탈퇴(form 필요없이)
 class AccountDeleteView(DeleteView):
@@ -82,4 +94,17 @@ class AccountDeleteView(DeleteView):
     success_url = reverse_lazy('accountapp:hello_world')
     # delete 안에 있는 로직 알 필요 없음!! 작성할 필요 없음! 안에 들어있으니까.
     template_name = 'accountapp/delete.html'
+
+    def get(self, request, *args, **kwargs):
+        # and : 이 user가 해당 페이지 주인이 맞는지 확인. self.get_object() self는 저 view 자체를 의미 -> target user를 가져오기
+        if request.user.is_authenticated and self.get_object() == request.user:
+            return super().get(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden()
+
+        def post(self, request, *args, **kwargs):
+            if request.user.is_authenticated and self.get_object() == request.user:
+                return super().post(request, *args, **kwargs)  # 부모 메소드에서 pos 불러오기
+            else:
+                return HttpResponseForbidden()
 
