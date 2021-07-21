@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User # 여기도 확인하기
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
@@ -5,13 +6,15 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, \
     DeleteView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
 
 from accountapp.forms import AccountCreationForm
 from accountapp.models import HelloWorld
 
-
+# login url 어딨는지 알려주기
+@login_required(login_url=reverse_lazy('accountapp:login'))
 def hello_world(request):
     # return HttpResponse('Hello World!')
     if request.method == 'POST':
@@ -64,6 +67,10 @@ class AccountDetailView(DetailView):
     template_name = 'accountapp/detail.html'
     # 라우팅 : 어떤 url로 들어가야 이 로직이 작동될 건지.
 
+# 데코레이터는 함수에 쓰는 애야. 그래서 클래스를 함수로 바꿔주는 데코레이터 있음!
+# get 방식의 http 에 적용해주겠다 명시..?
+@method_decorator(login_required, 'get')
+@method_decorator(login_required, 'post')
 class AccountUpdateView(UpdateView):
     # 어떤 것을 수정할 것인지 모델 적기
     model = User
@@ -74,19 +81,22 @@ class AccountUpdateView(UpdateView):
     success_url = reverse_lazy('accountapp:hello_world') # detail 로 넘어가려면 pk값 필요한데. reverse_lazy로 넘길 수 있는 방법 없음. 일단 hello월드로 넘겨
     template_name = 'accountapp/update.html'
 
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated and self.get_object() == request.user:
-            return super().get(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden()
-
-    def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated and self.get_object() == request.user:
-            return super().post(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden()
+    # 얘는 클래스 안에 있는 메소드이기 때문에 데코레이터가 바로 안 먹음.
+    # def get(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated and self.get_object() == request.user:
+    #         return super().get(request, *args, **kwargs)
+    #     else:
+    #         return HttpResponseForbidden()
+    #
+    # def post(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated and self.get_object() == request.user:
+    #         return super().post(request, *args, **kwargs)
+    #     else:
+    #         return HttpResponseForbidden()
 
 # 탈퇴(form 필요없이)
+@method_decorator(login_required, 'get')
+@method_decorator(login_required, 'post')
 class AccountDeleteView(DeleteView):
     model = User
     # 이 이름을 통해서 객체에 접근하겠다
@@ -95,16 +105,18 @@ class AccountDeleteView(DeleteView):
     # delete 안에 있는 로직 알 필요 없음!! 작성할 필요 없음! 안에 들어있으니까.
     template_name = 'accountapp/delete.html'
 
-    def get(self, request, *args, **kwargs):
-        # and : 이 user가 해당 페이지 주인이 맞는지 확인. self.get_object() self는 저 view 자체를 의미 -> target user를 가져오기
-        if request.user.is_authenticated and self.get_object() == request.user:
-            return super().get(request, *args, **kwargs)
-        else:
-            return HttpResponseForbidden()
 
-        def post(self, request, *args, **kwargs):
-            if request.user.is_authenticated and self.get_object() == request.user:
-                return super().post(request, *args, **kwargs)  # 부모 메소드에서 pos 불러오기
-            else:
-                return HttpResponseForbidden()
+
+    # def get(self, request, *args, **kwargs):
+    #     # and : 이 user가 해당 페이지 주인이 맞는지 확인. self.get_object() self는 저 view 자체를 의미 -> target user를 가져오기
+    #     if request.user.is_authenticated and self.get_object() == request.user:
+    #         return super().get(request, *args, **kwargs)
+    #     else:
+    #         return HttpResponseForbidden()
+    #
+    #     def post(self, request, *args, **kwargs):
+    #         if request.user.is_authenticated and self.get_object() == request.user:
+    #             return super().post(request, *args, **kwargs)  # 부모 메소드에서 pos 불러오기
+    #         else:
+    #             return HttpResponseForbidden()
 
