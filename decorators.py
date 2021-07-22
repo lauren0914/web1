@@ -42,3 +42,19 @@ def check_integer(func):
             raise ValueError
     return decorated
 
+@check_integer
+def rect_area(width, height):
+    return width * height
+
+@check_integer
+def tri_area(width, height):
+    return width * height / 2
+
+r_area = rect_area(-10, 10)
+print(r_area)
+
+t_area = tri_area(-10, 10)
+print(t_area)
+
+
+

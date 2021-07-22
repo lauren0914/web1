@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, \
     DeleteView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
 
+from accountapp.decorators import account_ownership_required
 from accountapp.forms import AccountCreationForm
 from accountapp.models import HelloWorld
 
@@ -67,10 +68,16 @@ class AccountDetailView(DetailView):
     template_name = 'accountapp/detail.html'
     # 라우팅 : 어떤 url로 들어가야 이 로직이 작동될 건지.
 
+
+has_ownership = [login_required, account_ownership_required]
+# 적용하고자 하는 모든 데코레이터를 리스트 안에 넣을 거야.
+
 # 데코레이터는 함수에 쓰는 애야. 그래서 클래스를 함수로 바꿔주는 데코레이터 있음!
 # get 방식의 http 에 적용해주겠다 명시..?
-@method_decorator(login_required, 'get')
-@method_decorator(login_required, 'post')
+# @method_decorator(login_required, 'get')
+# @method_decorator(login_required, 'post')
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class AccountUpdateView(UpdateView):
     # 어떤 것을 수정할 것인지 모델 적기
     model = User
@@ -95,8 +102,8 @@ class AccountUpdateView(UpdateView):
     #         return HttpResponseForbidden()
 
 # 탈퇴(form 필요없이)
-@method_decorator(login_required, 'get')
-@method_decorator(login_required, 'post')
+@method_decorator(has_ownership, 'get')
+@method_decorator(has_ownership, 'post')
 class AccountDeleteView(DeleteView):
     model = User
     # 이 이름을 통해서 객체에 접근하겠다
