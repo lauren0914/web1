@@ -20,6 +20,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls), # terminal 에서. (==서버에서 직접) superuser 라는 admin 계정 만들기
-    path('account/', include('accountapp.urls'))
+    path('account/', include('accountapp.urls')),
+    path('profiles/', include('profileapp.urls')),
     # admin/으로 시작하는 모든 URL을 장고가 view와 대조해 찾아낸다는 뜻
 ]
