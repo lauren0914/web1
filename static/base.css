@@ -22,3 +22,16 @@
     /*이렇게 두개 넣어주면 위아래, 양옆을 말하는 거*/
     padding: 1rem 1.5rem;
 }
+
+.profile_image {
+    height: 12rem;
+    width: 12rem;
+    border-radius: 28rem;
+    object-fit: cover;
+/*    비율에 맞춰서 사진 잘라냄*/
+
+}
+
+.NNS_B {
+    font-family: "NanumSquareB", cursive;
+}
