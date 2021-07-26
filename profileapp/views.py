@@ -13,3 +13,9 @@ class ProfileCreateView(CreateView):
     form_class = ProfileCreationForm
     success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'profileapp/create.html'
+
+    # 오버라이드
+    def form_valid(self, form):
+        # form에 부족한 user 를 넣어준다 근데 form에 3개밖에 없어서 못 넣어줌. -> 그냥 user가 아니라 instance.user
+        form.instance.user = self.request.user
+        return super().form_valid(form)
