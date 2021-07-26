@@ -11,4 +11,3 @@ class ProfileCreationForm(ModelForm):
         model = Profile
         # user한테서 뭐 받을 건지 정해주기
         fields = ['image', 'nickname', 'message']
-        
