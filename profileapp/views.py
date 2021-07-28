@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from profileapp.forms import ProfileCreationForm
 from profileapp.models import Profile
@@ -19,3 +19,10 @@ class ProfileCreateView(CreateView):
         # form(위ㅇ의 ProfileCreationForm을 말하는 거)에 부족한 user 를 넣어준다 근데 form에 3개밖에 없어서 못 넣어줌. -> 그냥 user가 아니라 instance.user
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+class ProfileUpdateView(UpdateView):
+    model = Profile
+    context_object_name = 'target_profile'
+    form_class = ProfileCreationForm
+    success_url = reverse_lazy('accountapp:hello_world')
+    template_name = 'profileapp/update.html'

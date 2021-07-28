@@ -14,10 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.global_settings import MEDIA_URL
 from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import path
 from django.contrib import admin
 from django.urls import path, include
 
@@ -26,5 +23,5 @@ urlpatterns = [
     path('account/', include('accountapp.urls')),
     path('profiles/', include('profileapp.urls')),
     # admin/으로 시작하는 모든 URL을 장고가 view와 대조해 찾아낸다는 뜻
-] + static(settings, MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # 이 요청이 들어오면, 저 경로로 제공해줄 거다.. 깊게 이해하지 마
