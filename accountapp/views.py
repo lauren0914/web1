@@ -106,6 +106,7 @@ class AccountUpdateView(UpdateView):
     #         return HttpResponseForbidden()
     def get_success_url(self):
         return reverse('accountapp:detail', kwargs={'pk':self.object.pk})
+
 # 탈퇴(form 필요없이)
 @method_decorator(has_ownership, 'get')
 @method_decorator(has_ownership, 'post')
