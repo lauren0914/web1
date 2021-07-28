@@ -59,6 +59,11 @@ class AccountCreateView(CreateView): # 상속
     # 함수와 클래스가 파이썬에서 불러와지는 방식의 차이
     template_name = 'accountapp/create.html' # 노란색으로 지금 html 파일이 없다고 뜸. 노란색은 파일이 없다는 걸 알려주는 거구나 ㅇㅅㅇ
 
+
+    def get_success_url(self):
+        return reverse('accountapp:detail', kwargs={'pk': self.object.pk})
+
+
 class AccountDetailView(DetailView):
     # 어떤 모델의 상세정보를 볼 건지. 모델 지정해주기. 위에서 사용한 모델
     model = User
@@ -85,7 +90,6 @@ class AccountUpdateView(UpdateView):
     # UserCreationForm 안에 있는 password1, 2가 아이디, 비밀번호 바꾸는 거?? 그래서 상속 받아서 커스텀을 하자
     form_class = AccountCreationForm
     context_object_name = 'target_user'
-    success_url = reverse_lazy('accountapp:hello_world') # detail 로 넘어가려면 pk값 필요한데. reverse_lazy로 넘길 수 있는 방법 없음. 일단 hello월드로 넘겨
     template_name = 'accountapp/update.html'
 
     # 얘는 클래스 안에 있는 메소드이기 때문에 데코레이터가 바로 안 먹음.
@@ -100,7 +104,8 @@ class AccountUpdateView(UpdateView):
     #         return super().post(request, *args, **kwargs)
     #     else:
     #         return HttpResponseForbidden()
-
+    def get_success_url(self):
+        return reverse('accountapp:detail', kwargs={'pk':self.object.pk})
 # 탈퇴(form 필요없이)
 @method_decorator(has_ownership, 'get')
 @method_decorator(has_ownership, 'post')
