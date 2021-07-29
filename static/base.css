@@ -35,3 +35,17 @@
 .NNS_B {
     font-family: "NanumSquareB", cursive;
 }
+
+.round_button {
+    color: black;
+    text-decoration: none;
+    /*그림자의 위치(0, 0), 크기*/
+    box-shadow: 0 0 3px black;
+    border-radius: 20rem;
+/*    내부 여백*/
+    padding: 0.3rem;
+}
+/* hover : 마우스를 올렸을 때 */
+.round_button:hover{
+    color: dimgrey;
+}
