@@ -133,3 +133,6 @@ class AccountDeleteView(DeleteView):
     #         else:
     #             return HttpResponseForbidden()
 
+
+
+
