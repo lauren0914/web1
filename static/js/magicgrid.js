@@ -288,12 +288,12 @@ let magicGrid = new MagicGrid({
 // 무언가를 찾을 건데. 태그 이름으로 가져올 거다
 // var masonrys = document.getElementsByTagName(qualifiedName: "img")
 //
-// for (let i=0; masonrys.length; i **) {
+// for (let i=0; masonrys.length; i ++) {
 //   masonrys[i].addEventListener('load', function () {
 //     magicGrid.positionItems();
 //   }, false
 // }
-
+// 로드를 추적해서.. 뭐라고 하셨지
 var masonrys = document.getElementsByTagName("img")
 
 for (let i=0; masonrys.length; i++) {
