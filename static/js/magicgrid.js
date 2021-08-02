@@ -283,4 +283,24 @@ let magicGrid = new MagicGrid({
   useMin: true
 });
 
+//mansonrys : 벽돌형 레이아웃을 통칭하는 말
+// document html 소스코드 전체를 의미
+// 무언가를 찾을 건데. 태그 이름으로 가져올 거다
+// var masonrys = document.getElementsByTagName(qualifiedName: "img")
+//
+// for (let i=0; masonrys.length; i **) {
+//   masonrys[i].addEventListener('load', function () {
+//     magicGrid.positionItems();
+//   }, false
+// }
+
+var masonrys = document.getElementsByTagName("img")
+
+for (let i=0; masonrys.length; i++) {
+  masonrys[i].addEventListener('load', function () {
+    magicGrid.positionItems();
+  }, false)
+}
+
 magicGrid.listen();
+
