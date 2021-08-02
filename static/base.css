@@ -26,7 +26,7 @@
 .profile_image {
     height: 12rem;
     width: 12rem;
-    border-radius: 28rem;
+    border-radius: 50rem;
     object-fit: cover;
 /*    비율에 맞춰서 사진 잘라냄*/
 
