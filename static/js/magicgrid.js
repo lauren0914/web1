@@ -294,6 +294,8 @@ let magicGrid = new MagicGrid({
 //   }, false
 // }
 // 로드를 추적해서.. 뭐라고 하셨지
+magicGrid.listen();
+
 var masonrys = document.getElementsByTagName("img")
 
 for (let i=0; masonrys.length; i++) {
@@ -302,5 +304,5 @@ for (let i=0; masonrys.length; i++) {
   }, false)
 }
 
-magicGrid.listen();
+
 

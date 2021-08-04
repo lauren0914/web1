@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
 from articleapp.forms import ArticleCreationForm
 from articleapp.models import Article
@@ -11,7 +11,7 @@ from articleapp.models import Article
 class ArticleCreateView(CreateView):
     model = Article
     form_class = ArticleCreationForm
-    success_url = reverse_lazy('accountapp:hello_world')
+    # success_url = reverse_lazy('accountapp:hello_world')
     template_name = 'articleapp/create.html'
 
     # ????? 뭐가 문제? writer id 가 자동생성이 안 된다고?
@@ -38,3 +38,9 @@ class ArticleUpdateView(UpdateView):
     # object == target_article 같다고 봐도 됨
     def get_success_url(self):
         return reverse('articleapp:detail', kwargs={'pk':self.object.pk})
+
+class ArticleDeleteView(DeleteView):
+    model = Article
+    context_object_name = 'target_article'
+    success_url = reverse_lazy('articleapp:list')
+    template_name = 'articleapp/delete.html'
