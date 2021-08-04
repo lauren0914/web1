@@ -5,7 +5,7 @@ from django.db import models
 
 # 나중엔 어떤 내용들어갈지 생각해본 후에 주도적으로 짜보기
 class Article(models.Model):
-    # OneToOneField : 객체 하나당 연결되는 거. 근데 우리는 1: 다 연결해야됨. user 한명이 게시글 여러개 작성할 수 있으니까ㅏ
+    # OneToOneField : 객체 하나당 연결되는 거. 근데 우리는 1: 다 연결해야됨. -> ForeignKey. user 한명이 게시글 여러개 작성할 수 있으니까ㅏ
     # 게시글 작성자가 탈퇴해도 게시글은 남아있게
     writer = models.ForeignKey(User, on_delete=models.SET_NULL,
                                related_name='article', null=True)
