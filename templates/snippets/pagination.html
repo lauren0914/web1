@@ -1,0 +1,25 @@
+    <div class="text-center my-5">
+        {% if page_obj.has_previous %}
+{# https://docs.djangoproject.com/en/3.2/ref/paginator/#page-class page_obj 공식문서 확인#}
+            <a href="?page={{ page_obj.previous_page_number }}"
+                class="btn btn-secondary rounded-pill">
+                {{ page_obj.previous_page_number }}
+            </a>
+        {% endif %}
+
+            <a href="#"
+                class="btn btn-dark rounded-pill">
+    {#            현재 페이지 출력#}
+                {{ page_obj.number }}
+            </a>
+{#    다음페이지로 갈 건데. 있는지 없는지 여부부터 확인해야지#}
+
+
+        {% if page_obj.has_next %}
+{#            ? : get방식으로 넘기는 방법,next_page_number를 가지고 page로 넘어가라 #}
+            <a href="?page={{ page_obj.next_page_number }}"
+                class="btn btn-secondary rounded-pill">
+                {{ page_obj.next_page_number }}
+            </a>
+        {% endif %}
+    </div>
