@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView
+from django.views.generic.edit import FormMixin
 
 from articleapp.decorators import article_ownership_required
 from articleapp.forms import ArticleCreationForm
@@ -14,6 +15,9 @@ from articleapp.models import Article
 
 
 # 게시글 작성할 때는 로그인만 해도 가능하게
+from commentapp.forms import CommentCreationForm
+
+
 @method_decorator(login_required, 'get')
 @method_decorator(login_required, 'post')
 class ArticleCreateView(CreateView):
@@ -33,11 +37,11 @@ class ArticleCreateView(CreateView):
 
 
 # 모두가 볼 수 있도록 인증과정 없음
-class ArticleDetailView(DetailView):
+class ArticleDetailView(DetailView, FormMixin):
     model = Article
+    form_class = CommentCreationForm
     context_object_name = 'target_article'
     template_name = 'articleapp/detail.html'
-
 
 # 게시글 작성자만 가능하도록
 @method_decorator(article_ownership_required, 'get')
