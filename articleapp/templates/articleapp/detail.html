@@ -49,16 +49,27 @@
                 <div class="comment-box">
                     <div>
                         {#  writer 는 user 객체임 #}
+                        {# 댓글 쓴 객체의 nickname 출력, 댓글 작성한 날짜 출력#}
                         <span class="NNS_B" style="font-size: 1.4rem;">
                             {{ comment.writer.profile.nickname }}
                         </span>
                         <span>{{ comment.created_at }}</span>
                     </div>
                     <div>
+{#                          {# 댓글의 내용 출력 #}
                         <p>
                             {{ comment.content }}
                         </p>
                     </div>
+
+                    {% if comment.writer == user %}
+                    <div style="text-align: right">
+                        <a href="{% url 'commentapp:delete' pk=comment.pk %}"
+                            class="btn btn-danger rounded-pill px-5">
+                            Delete
+                        </a>
+                    </div>
+                    {% endif %}
                 </div>
             {% endfor %}
             {% include 'commentapp/create.html' %}
