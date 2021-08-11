@@ -60,3 +60,14 @@
     text-align: left;
     font-size: 1.1rem;
 }
+
+/* ctrl + art + l : 자동정렬 */
+.comment-box {
+    text-align: left;
+    border: solid;
+    border-color: darkgrey;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 1rem;
+
+}
