@@ -69,5 +69,13 @@
     padding: 1rem;
     border-radius: 1rem;
     margin: 1rem;
-
+}
+/*화면 크기에 맞게 글씨 사이즈 조절. media query를 통해서 기기에 대한 정보를 얻을 수 있다*/
+/*screen 너비가 500px까지 적용한다*/
+/*우리가 rem을 사용했기 때문에 root인 html 의 사이즈를 줄여주는 것*/
+/*default font-size = 16px*/
+@media screen and (max-width: 500px) {
+    html {
+        font-size: 13px;
+    }
 }
