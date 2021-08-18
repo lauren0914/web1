@@ -9,19 +9,21 @@
             margin: 0 auto;
         }
         .container div {
-          width: 45%;
-          max-width: 200px;
+          {#width: 45%;#}
+          {#max-width: 200px; 이 값이 이제 필요가 없음. 1대1 사이즈로 만들 거니까. 얘는 우리가 사이즈를 임의로 지정해준 거잖아#}
           display: flex;
           justify-content: center;
           align-items: center;
           border-radius: 1rem;
           {#  display 수직 방향으로 쌓이도록 설정 #}
           flex-direction: column;
-          box-shadow: 0 0 1rem grey;
         }
 
         .container img {
-            width: 100%;
+            width: 7rem;
+            height: 7rem;
+            {#왜곡 없는 이미지 출력. 짜부된 거 출력#}
+            object-fit: cover;
             border-radius: 1rem;
         {#    부모의 넓이를 그대로 가져감 #}
         }
@@ -35,7 +37,8 @@
                 <a href="{% url 'projectapp:detail' pk=project.pk %}">
                     <img src="{{ project.image.url }}" alt="">
                 </a>
-                <span class="my-2 NNS_B">{{ project.name }}</span>
+{#                                                         truncatechars : 절삭 !#}
+                <span class="my-2 NNS_B">{{ project.name | truncatechars:10}}</span>
             </div>
         {% endfor %}
     </div>

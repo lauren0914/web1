@@ -9,7 +9,12 @@
                 Articles
             </a>
         </span>
-        <span>nav1</span>
+        <span>
+            <a  href="{% url 'projectapp:list' %}">
+                Projects
+            </a>
+
+        </span>
 {#        user 는 장고 어디서는 불러올 수 있는 객체임. 기본적으로 저 메소드가 달려있는데. 저걸 기반으로 해서 이 user가 로그인 했는지 안 했는지를 판단할 수 있음 #}
 {#    만약에 user가 로그인을 안 한 상태면 login, create 로 연결되는 a 태그를 보여줘라#}
         {% if not user.is_authenticated %}
