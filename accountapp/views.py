@@ -9,12 +9,16 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, UpdateView, \
     DeleteView  # 장고에서 view 안에 generic(중요함!)에서 Createview 를 가져왔다.
+from django.views.generic.list import MultipleObjectMixin
 
 from accountapp.decorators import account_ownership_required
 from accountapp.forms import AccountCreationForm
 from accountapp.models import HelloWorld
 
 # login url 어딨는지 알려주기
+from articleapp.models import Article
+
+
 @login_required(login_url=reverse_lazy('accountapp:login'))
 def hello_world(request):
     # return HttpResponse('Hello World!')
@@ -64,7 +68,7 @@ class AccountCreateView(CreateView): # 상속
         return reverse('accountapp:detail', kwargs={'pk': self.object.pk})
 
 
-class AccountDetailView(DetailView):
+class AccountDetailView(DetailView, MultipleObjectMixin):
     # 어떤 모델의 상세정보를 볼 건지. 모델 지정해주기. 위에서 사용한 모델
     model = User
     # 특정 account 객체의 이름을 뭐라고 정할 것이냐. 이름 지어주기? 나중에 템플릿에서 사용하기 위해서
@@ -73,6 +77,12 @@ class AccountDetailView(DetailView):
     template_name = 'accountapp/detail.html'
     # 라우팅 : 어떤 url로 들어가야 이 로직이 작동될 건지.
 
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        article_list = Article.objects.filter(writer=self.object)
+        return super().get_context_data(object_list=article_list,
+                                        **kwargs)
 
 has_ownership = [login_required, account_ownership_required]
 # 적용하고자 하는 모든 데코레이터를 리스트 안에 넣을 거야.

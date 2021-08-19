@@ -48,4 +48,8 @@
         {% endif %}
     </div>
 
+{#    그리드 넣어주기#}
+    <div>
+        {% include 'snippets/list_fragment.html' with article_list=object_list %}
+    </div>
 {% endblock %}
