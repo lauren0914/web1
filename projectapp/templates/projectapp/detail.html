@@ -18,7 +18,8 @@
 
 {#    게시판에 게시물 출력하기 위해 #}
     <div>
-        {% include 'snippets/list_fragment.html' %}
+{#    list_fragment.html 에 article_list라고 써져있는 거를 object_list 로 연결한다 #}
+        {% include 'snippets/list_fragment.html' with article_list=object_list %}
     </div>
 
 {% endblock %}

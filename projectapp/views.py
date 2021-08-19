@@ -31,9 +31,9 @@ class ProjectDetailView(DetailView, MultipleObjectMixin):
 
     # 템플릿에서 사용할 수 있도록 필터링..?
     def get_context_data(self, **kwargs):
-        # 조건에 맞는 애들만 필터링하겠다.
-        article_list = Article.objects.filter()
-        return super().get_context_data(**kwargs)
+        # 조건에 맞는 애들만 필터링하겠다. self.object = target_project
+        article_list = Article.objects.filter(project=self.object)
+        return super().get_context_data(object_list=article_list, **kwargs)
 
 
 class ProjectListView(ListView):
