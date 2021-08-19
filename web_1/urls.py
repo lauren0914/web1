@@ -25,6 +25,7 @@ urlpatterns = [
     path('articles/', include('articleapp.urls')),
     path('comments/', include('commentapp.urls')),
     path('projects/', include('projectapp.urls')),
+    path('subscribe/', include('subscribeapp.urls')),
     # admin/으로 시작하는 모든 URL을 장고가 view와 대조해 찾아낸다는 뜻
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # 이 요청이 들어오면, 저 경로로 제공해줄 거다.. 깊게 이해하지 마
