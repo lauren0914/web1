@@ -10,3 +10,8 @@ class Project(models.Model):
     image = models.ImageField(upload_to='project/', null=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    # 내부 스페셜 메소드. 인스턴스가 출력되거나, 문자열을 되돌려줘야할 때 어떤 값을 되돌려 줄 건지 선택하는 거
+    def __str__(self):
+        # 게시판 이름
+        return self.name
