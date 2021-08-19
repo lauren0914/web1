@@ -16,6 +16,15 @@
         </div>
     </div>
 
+
+    <div class="text-center">
+        <a href="{% url 'subscribeapp:subscribe' project_pk=target_project.pk %}"
+        class="btn btn-primary rounded-pill px-5">
+            Subscribe
+        </a>
+
+
+    </div>
 {#    게시판에 게시물 출력하기 위해 #}
     <div>
 {#    list_fragment.html 에 article_list라고 써져있는 거를 object_list 로 연결한다 #}
