@@ -25,3 +25,6 @@ class Article(models.Model):
     # 언제 작성했는지에 대한 시간정보 추가하기
     # auto_now_add : 값이 생성되는 순간 자동으로 설정되도록
     created_at = models.DateField(auto_now_add=True, null=True)
+    # 숫자필드. 좋아요 누르면 + 1. 맨 처음엔 좋아요 0개
+    like = models.IntegerField(default=0)
+    
