@@ -67,6 +67,13 @@ INSTALLED_APPS = [
     'likeapp',
 ]
 
+# 에러메세지가 출력하는 문자열을 오버라이딩. danger로 바꿔줌
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

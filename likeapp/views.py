@@ -1,5 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -12,6 +14,27 @@ from django.views.generic import RedirectView
 from articleapp.models import Article
 from likeapp.models import LikeRecord
 
+
+# db에 두번 접근하는데. 두번 다 성공했을 때 에러가 나지 않게 작성. 하나만 성공하면 에러
+@transaction.atomic
+def db_transaction(user, article):
+    likeRecord = LikeRecord.objects.filter(user=user,
+                                           article=article)
+
+    if likeRecord.exists():
+        # 좋아요 반영 X
+        # django.contrib
+        # ValidationError : 장고에 있는 에러 클래스. 데이터를 검증하면서 생긴 에러가 발생했을 때
+        raise ValidationError('like already exists')
+        #                     request, messages level, 보여줄 문구
+    else:
+        LikeRecord(user=user, article=article).save()
+        article.like += 1
+        # 실제 DB에 반영
+        article.save()
+
+        
+        
 @method_decorator(login_required, 'get')
 class LikeArticleView(RedirectView):
 
@@ -20,23 +43,14 @@ class LikeArticleView(RedirectView):
         user = request.user
         article = Article.objects.get(pk=kwargs['article_pk'])
 
-        likeRecord = LikeRecord.objects.filter(user=user,
-                                               article=article)
-        # 좋아요 찍은 기록 있으면 저 페이지로 연결
-        if likeRecord.exists():
-            # 좋아요 반영 X
-            # django.contrib
-            #                     request, messages level, 보여줄 문구
-            messages.add_message(request, messages.ERROR, '좋아요는 한 번만 가능합니다.')
-            return HttpResponseRedirect(reverse('articleapp:detail', kwargs={'pk' : kwargs['article_pk']}))
-        else:
-            LikeRecord(user=user, article=article).save()
-            article.like += 1
-            # 실제 DB에 반영
-            article.save()
-            # 좋아요 반영 O
+        try:
+            db_transaction(user, article)
+            # 좋아요 반영 O 메세지 출력
             messages.add_message(request, messages.SUCCESS, '좋아요가 반영되었습니다')
 
+        except ValidationError:
+            messages.add_message(request, messages.ERROR, '좋아요는 한 번만 가능합니다.')
+            return HttpResponseRedirect(reverse('articleapp:detail', kwargs={'pk': kwargs['article_pk']}))
 
         return super().get(request, *args, **kwargs)
 

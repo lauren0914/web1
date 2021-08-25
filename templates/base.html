@@ -13,7 +13,8 @@
 {# views.py에 있는 messages가 그대로 들어옴#}
 {% for message in messages %}
     <div class="text-center">
-        <div class="btn btn-success round_button px-5">
+{#    message level별로 색깔 다르게 출력하고 싶음. #}
+        <div class="btn btn-{{ message.tags }} round_button px-5">
             {{ message }}
         </div>
     </div>
