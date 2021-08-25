@@ -9,6 +9,17 @@
 
 {#구분선#}
 <hr>
+
+{# views.py에 있는 messages가 그대로 들어옴#}
+{% for message in messages %}
+    <div class="text-center">
+        <div class="btn btn-success round_button px-5">
+            {{ message }}
+        </div>
+    </div>
+{% endfor %}
+
+
 {% block content %}
 {% endblock %}
 <hr>
