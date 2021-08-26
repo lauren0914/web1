@@ -29,7 +29,8 @@
                  class="article_image"
                  alt="">
             <div class="article_content my-5">
-                {{ target_article.content }}
+{#                | :filter! 긴 제목 절삭할 떄 썼던 거. 이번엔 safe filter : html 적용하는 거#}
+                {{ target_article.content | safe}}
             </div>
             {% if target_article.writer == user %}
             <div>

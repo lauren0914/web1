@@ -2,6 +2,10 @@
 {% load bootstrap4 %}
 
 {% block content %}
+{# medium editor https://github.com/yabwe/medium-editor   #}
+{# 게시글 쓸 때만 사용하는 거니까 template head에 작성 안 함#}
+<script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
 
     <div class="text-center mw-500 m-auto">
         <div class="m-5">
@@ -22,6 +26,9 @@
             </form>
         </div>
     </div>
+{# editable 이라는 클래스를 가지고 있는 애를 media editor로 바꿔주겠다.#}
+{#  forms.py에서 ModelForm 상속받아서 사용하고 있잖아. content 를 미디어에디터로 사용하기 위해서는 커스터마이징 해야됨#}
+    <script>var editor = new MediumEditor('.editable');</script>
 
 {% endblock %}
 
