@@ -19,29 +19,7 @@ from accountapp.models import HelloWorld
 from articleapp.models import Article
 
 
-@login_required(login_url=reverse_lazy('accountapp:login'))
-def hello_world(request):
-    # return HttpResponse('Hello World!')
-    if request.method == 'POST':
-        temp = request.POST.get('input')
-
-        new_data = HelloWorld()
-        new_data.text = temp # 이렇게 중단점을 만들어 줄 수 있음. 일반적인 runserver 에서는 안 먹히고. 오른쪽 상단에 debug라는 버튼을 누르면 중단점에서 멈추게 할 수 있음
-        # 디버그 창(어디서 확인해?) 열어서 어떤 상태인지 알 수 있음. 어디서 에러났는지 확인할 수 있음. f8을 누르면 한줄한줄 넘어가는 걸 볼 수 있음.
-        new_data.save() # save 함수 내부에서 어떤 일이 벌어나는지 알고 싶다. f7을 누르게 되면 save 함수로 들어갈 수 있음.
-        # 들어가서 f8 누르면 내가 보고 있는 라인 기준으로 한줄한줄 실행시키는 것
-        # f9를 누르게 되면, 다음 중단점까지 건너뛴다.
-        
-        # post 요청을 get 요청으로 redirect(재연결하는) 해준다. 새로고침할 때 마지막 요청(우리 사이트에서는 post요청이었음)을 반복하는 문제를 해결하기 위해서
-        # 어디로 보낼 건지 알려줄 건데. / 기반의 주소로 안 쓸 거야. account 앱 안에 있는 hello_world(url name) 라우트로 보내라.
-        # 근데 이렇게 하면 실행이 안 됨. 왜냐면 여기는 / 주소가 들어가야되거든. 그래서 / 주소로 역 변환을 해줄 거야(reverse)
-        return HttpResponseRedirect(reverse('accountapp:hello_world'))
-        
-    else:
-        # HelloWorld.objects : HelloWorld(데이터베이스)의 모든 객체를 가져온다
-        data_list = HelloWorld.objects.all()
-        return render(request, 'accountapp/hello_world.html',
-                      context={'data_list': data_list})
+#
 
 # request : 요청 관련 정보가 들어오는 곳. 지금은 안 씀
 # template name
@@ -57,7 +35,7 @@ class AccountCreateView(CreateView): # 상속
     # user data를 넣을 입력 form
     form_class = UserCreationForm # 얘도 장고에서 제공해주는 거 있음
     # create 가 정상적으로 이뤄진 후에 어느 url로 연결할 것인가?
-    success_url = reverse_lazy('accountapp:hello_world') 
+    success_url = reverse_lazy('articleapp:list')
     # reverse_lazy : 함수형에서는 reverse 썼는데 여기서는 lazy 왜 붙여요?
     # 함수에서 reverse 불러올 때는 바로 호출, class에서는 나중에 불러오기 때문에? lazy를 쓴다. 걍 외워
     # 함수와 클래스가 파이썬에서 불러와지는 방식의 차이
@@ -124,7 +102,7 @@ class AccountDeleteView(DeleteView):
     model = User
     # 이 이름을 통해서 객체에 접근하겠다
     context_object_name = 'target_user'
-    success_url = reverse_lazy('accountapp:hello_world')
+    success_url = reverse_lazy('articleapp:list')
     # delete 안에 있는 로직 알 필요 없음!! 작성할 필요 없음! 안에 들어있으니까.
     template_name = 'accountapp/delete.html'
 

@@ -14,7 +14,7 @@ class Article(models.Model):
                                related_name='article', null=True)
     # 게시판과 게시글 연결해주기
     project = models.ForeignKey(Project, on_delete=models.SET_NULL,
-                               related_name='article', null=True)
+                               related_name='article', null=True, blank=True)
     
     # 게시글 작성할 때 받을 정보. CharField : 중단문
     title = models.CharField(max_length=200, null=True)

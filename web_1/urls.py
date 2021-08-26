@@ -18,7 +18,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from articleapp.views import ArticleListView
+
 urlpatterns = [
+    path('', ArticleListView.as_view(), name='home'),
+
     path('admin/', admin.site.urls), # terminal 에서. (==서버에서 직접) superuser 라는 admin 계정 만들기
     path('accounts/', include('accountapp.urls')),
     path('profiles/', include('profileapp.urls')),
