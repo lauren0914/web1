@@ -87,3 +87,5 @@ __pycache__/
 media/
 
 staticfiles/
+
+web_1.pem
