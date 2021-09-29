@@ -8,6 +8,7 @@ services:
     volumes:
       - web_1_media:/data/media/
       - web_1_static:/data/static/
+      - web_1_log:/var/log/nginx/
       - /home/ubuntu/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
@@ -48,6 +49,7 @@ volumes:
   web_1_media:
   web_1_static:
   gis_mariadb:
+  web_1_log:
 
 secrets:
   DJANGO_SECRET_KEY:
